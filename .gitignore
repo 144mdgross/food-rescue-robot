@@ -11,3 +11,4 @@ log/*.log.*
 .byebug_history
 bfr-data/**/*
 .env
+coverage

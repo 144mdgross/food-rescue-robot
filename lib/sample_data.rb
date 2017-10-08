@@ -5,7 +5,7 @@ class SampleData
   class NotDevModeError < StandardError; end
 
   def self.create_region
-    raise NotDevModeError unless Rails.env.development?
+    # raise NotDevModeError unless Rails.env.development?
 
     city = Faker::Address.city
 
