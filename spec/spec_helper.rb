@@ -1,6 +1,8 @@
 require 'simplecov'
 SimpleCov.start 'rails'
 
+require 'factory_girl_rails'
+
 # Previous content of test helper now starts here
 
 RSpec.configure do |config|
@@ -20,3 +22,7 @@ RSpec.configure do |config|
   config.profile_examples = 10
   config.order = :random
 end
+
+#The parent directory, allows easier access to files w/n tests
+# APP_ROOT = File.expand_path('../../', __FILE__)
+# puts APP_ROOT

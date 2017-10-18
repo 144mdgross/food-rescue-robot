@@ -37,7 +37,7 @@ end
 group :test do
   gem 'capybara'
   gem 'capybara-screenshot'
-  gem 'factory_girl_rails'
+  gem 'factory_girl_rails', :require => false
   gem 'poltergeist', '~> 1.12'
   gem 'rack-test'
   gem 'rspec-rails', '~> 3.5'
