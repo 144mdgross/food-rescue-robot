@@ -1,0 +1,108 @@
+require 'rails_helper'
+
+RSpec.describe ScaleTypesController do
+  feature 'testing helpers' do
+  let!(:boulder) { create(:region, name: 'Boulder') }
+  let!(:volunteer) { create(:volunteer, assigned: true, regions: []) }
+  let(:scale) { create(:scale_type) }
+
+  before do
+    volunteer.admin = true
+    # volunteer.save!
+    create(:assignment, volunteer: volunteer, region: boulder)
+    login volunteer
+    scale
+  end
+
+  context 'authenticated_volunteer' do
+    it 'allows admins access to scale_types' do
+      visit '/scale_types'
+      expect(response).to render_template('index')
+    end
+  end
+
+  context '#DESTROY /scale_types' do
+  let(:delete_request) { delete :destroy, id: scale.id }
+
+    # it 'recognizes the controller and action' do
+    #   assert_recognizes({controller: 'scale_types', action: 'destroy', id: '1'}, 'scale_types/1')
+    # end
+
+    it 'doesn\'t delete a scale' do
+      expect { delete_request }.not_to change(ScaleType, :count)
+    end
+
+    it 'sets given scale_type to active: false' do
+      # FactoryGirl.reload
+      # puts ScaleType.all.inspect
+      # # expect(scale.active).to eq false
+      # expect { delete_request }.to change {ScaleType.first.active == false }
+    end
+
+    # it 'should redirect' do
+    #   expect(response.status).to eq 302
+    # end
+  end
+
+  context 'GET #NEW /scale_types/new' do
+    it 'renders pages to create a new scale' do
+      visit '/scale_types/new'
+      expect(response).to render_template('new')
+    end
+  end
+
+  context '#CREATE /scale_types' do
+    # let(:post_request) { post :create, scale_type: 'blue' }
+    # it 'makes a new scale' do
+    #   # expect{ post_request }.to change(ScaleType, :count).by(+1)
+    #   expect { post_request }.to
+    # end
+
+    it 'displays success message' do
+      puts volunteer.regions.inspect
+      puts boulder.inspect
+      visit "/scale_types/new?region_id=#{boulder.id}"
+      fill_in 'Name', with: 'kitchen'
+      click_on 'Save changes'
+      expect(flash[:assigns] = 'Created successfully.' )
+    end
+
+    it 'redirects to /scale_types after successful save' do
+    end
+
+    it 'displays fail message when scale doesn\'t save' do
+    end
+
+    it 're-renders /scale_types/new when scale fails to save' do
+    end
+  end
+
+  context '#EDIT /scale_types/:id/edit' do
+    it 'renders a scale\'s edit page' do
+      # NOTE: come back and create a scale_type to refer to in url
+      # visit '/scale_types/2/edit'
+      # expect(response).to render_template('edit')
+    end
+  end
+
+  context '#UPDATE /scale_types/:id/edit' do
+    it 'updates the correct scale' do
+    end
+
+    it 'redirects to /scale_type' do
+    end
+
+    it 'displays success message' do
+    end
+
+    it 'renders error message on /scale_types/:id/edit when update fails' do
+    end
+  end
+end
+end
+
+
+
+#
+
+#
